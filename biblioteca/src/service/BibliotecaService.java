@@ -14,6 +14,17 @@ public class BibliotecaService {
   private List<Usuario> usuarios;
   private List<Prestamo> prestamos;
 
+  //Validamos duplicados
+  public boolean existeLibro(int id){
+    return libros.stream().anyMatch(l -> l.getId() == id);
+  }
+  public boolean existeUsuario(int id){
+    return usuarios.stream().anyMatch(u -> u.getId() == id);
+  }
+  public boolean existePrestamo(int id){
+    return prestamos.stream().anyMatch(p -> p.getId() == id);
+  }
+
   public BibliotecaService() {
     libros = new ArrayList<>();
     usuarios = new ArrayList<>();
@@ -21,6 +32,10 @@ public class BibliotecaService {
   }
 
   public void agregarLibro(Libro libro) {
+    if(existeLibro(libro.getId())){
+      System.out.println("El ID del libro ya existe");
+      return;
+    }
     libros.add(libro);
     System.out.println("Libro agregado: " + libro);
   }
@@ -34,10 +49,18 @@ public class BibliotecaService {
   }
 
   public Libro buscarLibroPorId(int id) {
-    return libros.stream().filter(l -> l.getId() == id).findFirst().orElse(null);
+    for (Libro l : libros){
+      if(l.getId() == id) return l;
+    }
+    return null;
+    //return libros.stream().filter(l -> l.getId() == id).findFirst().orElse(null);
   }
 
   public void agregarUsuario(Usuario usuario) {
+    if(existeUsuario(usuario.getId())){
+      System.out.println("Ya existe usuario con ese ID");
+      return;
+    }
     usuarios.add(usuario);
     System.out.println("Usuario agregado: " + usuario);
   }
@@ -57,20 +80,26 @@ public class BibliotecaService {
     return null;
   }
 
-
-
-
   // gestionamos los prestamos
 
   public void prestarLibro(int idPrestamo, int idUsuario, int idLibro){
-    Usuario usuario = buscarUsuarioPorId(idUsuario);
-    Libro libro = buscarLibroPorId(idLibro);
+    if(existePrestamo(idPrestamo)){
+      System.out.println("El libro se encuentra prestado.");
+      return;
+    }
 
-    if ( usuario == null){
+    Usuario usuario = buscarUsuarioPorId(idUsuario);
+    if(usuario == null){
+      System.out.println("Usuario no encontrado.");
+    }
+
+
+    Libro libro = buscarLibroPorId(idLibro);
+    if (usuario == null){
       System.out.println("Usuario no encontrado.");
       return;
     }
-    if ( libro == null ){
+    if (libro == null ){
       System.out.println("Libro no encontrado.");
       return;
     }
@@ -78,26 +107,29 @@ public class BibliotecaService {
       System.out.println("El libro ya esta prestado.");
       return;
     }
+
+
     Prestamo prestamo = new Prestamo(idPrestamo, usuario, libro);
     prestamos.add(prestamo);
     libro.setDisponible(false);
-
     System.out.println("Prestamo realizado: "+ prestamo);
   }
+
   public void devolverLibro(int idPrestamo) {
-    Prestamo prestamo = prestamos.stream()
-        .filter(p -> p.getId() == idPrestamo && p.getFechaDevolucion() == null)
-        .findFirst()
-        .orElse(null);
-
-    if (prestamo == null) {
-      System.out.println("Préstamo no encontrado o ya devuelto.");
-      return;
+    for (Prestamo p : prestamos) {
+      if (p.getId() == idPrestamo) {
+        if (p.getFechaDevolucion() != null) {
+          System.out.println("El prestamo fue devuelto");
+          return;
+        }
+        p.devolver();
+        System.out.println("Libro devuelto: " + p.getLibro().getTitulo());
+        return;
+      }
     }
-
-    prestamo.devolver();
-    System.out.println("Libro devuelto: " + prestamo.getLibro().getTitulo());
+    System.out.println("No encontramos el prestado.");
   }
+
 
   public void listarPrestamos(){
     if(prestamos.isEmpty()){

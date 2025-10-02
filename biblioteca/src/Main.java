@@ -28,7 +28,7 @@ public class Main {
 
       switch (opcion) {
         case 1:
-          int idLibro = InputUtils.leerEntero(sc, "Ingrese ID del libro: ");
+          int idLibro = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del libro: ");
           String titulo = InputUtils.leerTexto(sc, "Ingrese título: ");
           String autor = InputUtils.leerTexto(sc, "Ingrese autor: ");
           biblioteca.agregarLibro(new Libro(idLibro, titulo, autor));
@@ -39,9 +39,9 @@ public class Main {
           break;
 
         case 3:
-          int idUsuario = InputUtils.leerEntero(sc, "Ingrese ID del usuario: ");
+          int idUsuario = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del usuario: ");
           String nombre = InputUtils.leerTexto(sc, "Ingrese nombre: ");
-          String email = InputUtils.leerTexto(sc, "Ingrese email: ");
+          String email = InputUtils.leerEmail(sc, "Ingrese email: ");
           biblioteca.agregarUsuario(new Usuario(idUsuario, nombre, email));
           break;
 
@@ -50,14 +50,14 @@ public class Main {
           break;
 
         case 5:
-          int idPrestamo = InputUtils.leerEntero(sc, "Ingrese ID del préstamo: ");
-          int uId = InputUtils.leerEntero(sc, "Ingrese ID del usuario: ");
-          int lId = InputUtils.leerEntero(sc, "Ingrese ID del libro: ");
+          int idPrestamo = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del préstamo: ");
+          int uId = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del usuario: ");
+          int lId = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del libro: ");
           biblioteca.prestarLibro(idPrestamo, uId, lId);
           break;
 
         case 6:
-          int idDev = InputUtils.leerEntero(sc, "Ingrese ID del préstamo a devolver: ");
+          int idDev = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del préstamo a devolver: ");
           biblioteca.devolverLibro(idDev);
           break;
 
