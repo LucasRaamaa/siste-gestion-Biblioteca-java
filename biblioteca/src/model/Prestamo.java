@@ -28,12 +28,12 @@ public class Prestamo {
 
   @Override
   public String toString(){
-  return "Prestamo{"+
-      "Id: "+id+
-      ", Usuario: "+ usuario.getNombre() +
-      ", Libro: " + libro.getTitulo() +
-      ", Fecha Prestado: "+ fechaPrestamo+
-      ", Fecha de Devolucion: " + (fechaDevolucion != null ? fechaDevolucion : "Pendiente")+
-      '}';
+    return "Prestamo{"+
+        "Id: "+id+
+        ", Usuario: "+ usuario.getNombre() +
+        ", Libro: " + libro.getTitulo() +
+        ", Fecha Prestado: "+ fechaPrestamo+
+        ", Fecha de Devolucion: " + (fechaDevolucion != null ? fechaDevolucion : "Pendiente")+
+        '}';
   }
 }

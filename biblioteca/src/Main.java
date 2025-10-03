@@ -1,13 +1,32 @@
 import model.Libro;
 import model.Usuario;
+import model.Prestamo;
 import service.BibliotecaService;
+
+import dao.UsuarioDAO;
+import dao.LibroDAO;
+import dao.PrestamoDAO;
+
 
 import java.util.Scanner;
 
 public class Main {
-
   public static void main(String[] args) {
+
+    // mysql
+    /*UsuarioDAO usuarioDAO = new UsuarioDAO();
+    Usuario nuevo = new Usuario(1,"Lucas","Lucas@gmail.com");
+    usuarioDAO.agregarUsuario(nuevo);
+    usuarioDAO.listarUsuarios();*/
+
     Scanner sc = new Scanner(System.in);
+    // ==================== BD   =====================
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
+    LibroDAO libroDAO = new LibroDAO();
+    PrestamoDAO prestamoDAO = new PrestamoDAO();
+
+
+
     BibliotecaService biblioteca = new BibliotecaService();
     int opcion;
 
@@ -31,38 +50,51 @@ public class Main {
           int idLibro = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del libro: ");
           String titulo = InputUtils.leerTexto(sc, "Ingrese título: ");
           String autor = InputUtils.leerTexto(sc, "Ingrese autor: ");
-          biblioteca.agregarLibro(new Libro(idLibro, titulo, autor));
+
+
+          Libro nuevoLibro = new Libro(idLibro, titulo, autor);
+          libroDAO.agregarLibro(nuevoLibro);
           break;
 
         case 2:
-          biblioteca.listarLibros();
+          libroDAO.listarLIbros();
           break;
 
         case 3:
           int idUsuario = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del usuario: ");
           String nombre = InputUtils.leerTexto(sc, "Ingrese nombre: ");
           String email = InputUtils.leerEmail(sc, "Ingrese email: ");
-          biblioteca.agregarUsuario(new Usuario(idUsuario, nombre, email));
+          Usuario nuevoUsuario = new Usuario(idUsuario, nombre, email);
+          usuarioDAO.agregarUsuario(nuevoUsuario);
           break;
 
         case 4:
-          biblioteca.listarUsuarios();
+          usuarioDAO.listarUsuarios();
           break;
 
         case 5:
           int idPrestamo = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del préstamo: ");
           int uId = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del usuario: ");
           int lId = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del libro: ");
-          biblioteca.prestarLibro(idPrestamo, uId, lId);
+
+          Usuario usuario = usuarioDAO.buscarPorId(uId);
+          Libro libro = libroDAO.buscarPorId(lId);
+
+          if (usuario != null && libro != null) {
+            Prestamo nuevoPrestamo = new Prestamo(idPrestamo, usuario, libro);
+            prestamoDAO.registrarPrestamo(nuevoPrestamo); // acá usás el DAO para guardar en MySQL
+          } else {
+            System.out.println("Usuario o Libro no encontrado en la base de datos.");
+          }
           break;
 
         case 6:
           int idDev = InputUtils.leerEnterosPositivo(sc, "Ingrese ID del préstamo a devolver: ");
-          biblioteca.devolverLibro(idDev);
+          prestamoDAO.devolverPrestamo(idDev);
           break;
 
         case 7:
-          biblioteca.listarPrestamos();
+          prestamoDAO.listarPrestamos();
           break;
 
         case 0:
