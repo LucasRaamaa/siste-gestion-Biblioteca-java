@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3961fdf6-a4a0-4500-a4a2-e003f6a6d7e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_9_4_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioteca/biblioteca.iml" beforeDir="false" afterPath="$PROJECT_DIR$/biblioteca/biblioteca.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioteca/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/biblioteca/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioteca/src/model/Prestamo.java" beforeDir="false" afterPath="$PROJECT_DIR$/biblioteca/src/model/Prestamo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/biblioteca/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/biblioteca/Main.class" afterDir="false" />
-    </list>
+    <list default="true" id="3961fdf6-a4a0-4500-a4a2-e003f6a6d7e8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
